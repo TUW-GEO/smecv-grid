@@ -5,7 +5,8 @@ Loading and using the smecv grid
 The smecv_grid package contains the global quarter degree (0.25x0.25 DEG) grid
 definition, used for organising the ESA CCI SM and C3S SM data products.
 It contains masks for land points (default), dense vegetation (VOD>0.526),
-rainforest areas and one or multiple ESA CCI LC classes (reference year 2010).
+rainforest areas, one or multiple ESA CCI LC classes (reference year 2010) and
+one or more KG climage classes (`Peel et al. 2007 <https://www.hydrol-earth-syst-sci.net/11/1633/2007/>`_, DOI:10.5194/hess-11-1633-2007).
 Grid points are arranged in 5x5 degree cells with 400 grid points per cell.
 
   .. image:: 5x5_cell_partitioning_cci.png
@@ -32,7 +33,9 @@ in `pygeogrids <https://github.com/TUW-GEO/pygeogrids>`_
     dense_vegetation_grid = SMECV_Grid_v052(subset_flag='high_vod')
     # Load a grid with points over urban areas
     urban_grid = SMECV_Grid_v052(subset_flag='landcover_class', subset_value=190.)
-    # Load a grid with points over grassland areas
+    # Load a landcover with points over grassland areas
     grassland_grid = SMECV_Grid_v052(subset_flag='landcover_class',
         subset_value=[120., 121., 122., 130., 180.])
-
+    # Load a climate grid with points over tropical areas
+    tropical_grid = SMECV_Grid_v052(subset_flag='climate_class',
+        subset_value=[0., 1., 2.])
