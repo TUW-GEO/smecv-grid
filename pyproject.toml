@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=46.1.0", "setuptools_scm[toml]>=5", "wheel", "packaging", "build", "twine"]
+requires = ["setuptools>=46.1.0", "setuptools_scm[toml]>=5"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
@@ -30,6 +30,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+building = [
+    "wheel",
+    "packaging",
+    "build",
+    "twine"
+]
 testing = [
     "pytest",
     "pytest-cov"
