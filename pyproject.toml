@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=46.1.0", "setuptools_scm[toml]>=5"]
+requires = ["setuptools>=46.1.0", "setuptools_scm[toml]>=5", "wheel", "packaging", "build", "twine"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
@@ -31,6 +31,8 @@ dependencies = [
 
 [project.optional-dependencies]
 building = [
+    "setuptools>=46.1.0",
+    "setuptools_scm[toml]>=5",
     "wheel",
     "packaging",
     "build",
