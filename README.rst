@@ -2,17 +2,20 @@
 smecv_grid
 ==========
 
-.. image:: https://travis-ci.org/TUW-GEO/smecv-grid.svg?branch=master
-    :target: https://travis-ci.org/TUW-GEO/smecv-grid
+|ci| |cov| |pip| |doc|
 
-.. image:: https://coveralls.io/repos/github/TUW-GEO/smecv-grid/badge.svg?branch=master
-    :target: https://coveralls.io/github/TUW-GEO/smecv-grid?branch=master
 
-.. image:: https://readthedocs.org/projects/smecv-grid/badge/?version=latest
-    :target: http://smecv-grid.readthedocs.io/en/latest/?badge=latest
+.. |ci| image:: https://github.com/TUW-GEO/smecv-grid/actions/workflows/ci.yml/badge.svg?branch=master
+   :target: https://github.com/TUW-GEO/smecv-grid/actions
 
-.. image:: https://badge.fury.io/py/smecv-grid.svg
-    :target: https://badge.fury.io/py/smecv-grid
+.. |cov| image:: https://coveralls.io/repos/TUW-GEO/smecv-grid/badge.png?branch=master
+  :target: https://coveralls.io/r/TUW-GEO/smecv-grid?branch=master
+
+.. |pip| image:: https://badge.fury.io/py/smecv-grid.svg
+    :target: http://badge.fury.io/py/smecv-grid
+
+.. |doc| image:: https://readthedocs.org/projects/smecv-grid/badge/?version=latest
+   :target: http://ismn.readthedocs.org/
 
 Description
 ===========
