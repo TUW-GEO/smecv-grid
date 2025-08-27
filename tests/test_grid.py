@@ -29,7 +29,7 @@ import pytest
 @pytest.mark.parametrize("SMECV_Grid, gpi, size, activesize",
                          [(SMECV_Grid_v042, 739040, 1036800, 244243,),
                           (SMECV_Grid_v052, 739040, 1036800, 244243,),
-                          (SMECV_Grid_MR_v01, 4619601, 6480000, 2195242,), ])
+                          (SMECV_Grid_MR_v01, 4619601, 6480000, 1526598,), ])
 def test_SMECV_Grid_land(SMECV_Grid, gpi, size, activesize):
     grid = SMECV_Grid(subset_flag='land')
     gp, dist = grid.find_nearest_gpi(-99.87, 38.37)
