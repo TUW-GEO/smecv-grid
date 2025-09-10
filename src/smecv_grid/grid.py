@@ -160,7 +160,8 @@ def SMECV_Grid_v042(subset_flag='land'):
         Selected subset in quarter degree resolution.
     """
 
-    warnings.warn("SMECV Grid v4 is deperecated. Please use a newer grid version.",
+    warnings.warn("SMECV Grid v4 is deprecated. "
+                  "Please use a newer grid version.",
                   DeprecationWarning)
 
     lon, lat, gpis, cells, shape = meshgrid(resolution=0.25, cellsize=5.,
@@ -187,6 +188,7 @@ class SMECV_Grid_v052(CellGrid):
 
     subset_flag : str or None, optional (default: 'land')
         Select a subset that should be loaded, e.g. land, high_vod, rainforest, cci_lc
+        Passing None will create a global grid without gaps.
     subset_value : float or list, optional (default: 1.)
         Select one or more values of the variable that defines the subset,
         i.e 1. for masks (high_vod, land) or a float or list of floats for one or
@@ -204,7 +206,8 @@ class SMECV_Grid_v052(CellGrid):
         file.
     """
 
-    def __init__(self, subset_flag='land', subset_value=1., cellsize=5., resolution=.25, version='05.2'):
+    def __init__(self, subset_flag='land', subset_value=1., cellsize=5.,
+                 resolution=0.25, version="05.2"):
 
         self.resolution = resolution
         self.cellsize = cellsize
@@ -216,18 +219,23 @@ class SMECV_Grid_v052(CellGrid):
             meshgrid(resolution=self.resolution, cellsize=self.cellsize,
                      flip_lats=False)  # global grid
 
-        subset_gpis = self._load_subset(self.subset_flag, self.subset_value)
+        if self.subset_flag is not None:
+            subset_gpis = self._load_subset(self.subset_flag, self.subset_value)
+        else:
+            subset_gpis = None
 
         super(SMECV_Grid_v052, self).__init__(lon=lon, lat=lat, gpis=gpis,
                                               cells=cells, subset=subset_gpis,
                                               shape=shape)
-
-    def _load_subset(self, subset_flag: {str, None}, subset_value: {int, list}) -> {np.array, None}:
+    
+    def _load_subset(self, subset_flag: {str, None}, subset_value: {int, list}) \
+            -> {np.array, None}:
         """ Load grid points for the subset from definition file"""
 
         if subset_flag is not None:
             name = get_grid_definition_filename(version=self.version)
-            subset_grid = ncgrid.load_grid(name, subset_flag=subset_flag, subset_value=subset_value)
+            subset_grid = ncgrid.load_grid(name, subset_flag=subset_flag,
+                                           subset_value=subset_value)
 
             if isinstance(subset_grid.activegpis, np.ma.masked_array):
                 subset = subset_grid.activegpis.data
@@ -237,6 +245,41 @@ class SMECV_Grid_v052(CellGrid):
             subset = None
 
         return subset
+
+    def subgrid_from_subset(self) -> CellGrid:
+        """
+        Cut the grid to the currently active subset.
+        Discards all other points in the new grid.
+
+        Returns
+        -------
+        subgrid : CellGrid
+            Subgrid, which only contains the points of the active subset.
+        """
+        return CellGrid(lon=self.activearrlon, lat=self.activearrlat,
+                        cells=self.activearrcell, gpis=self.activegpis)
+
+    def subgrid_from_gpis(self, gpis):
+        """
+        Create a new subgrid of the current grid, based on the passed GPIs.
+        GPIs that are not in the grid will be ignored. If None of the passed
+        GPIs are in the original grid, then an empty grid will be returned.
+
+        Parameters
+        ----------
+        gpis : int, np.ndarray
+            Grid point indices to create subgrid from.
+        from_subset: bool, optional (default: True)
+            If this is activated, then we only consider points of the currently
+            loaded subset for the subgrid. To use all (global) grid points,
+            pass `from_subset=False'.
+
+        Returns
+        -------
+        subgrid: CellGrid
+            Subgrid of the passed GPIs (if they existed).
+        """
+        return self.subgrid_from_subset().subgrid_from_gpis(gpis)
 
     def subgrid_from_bbox(self, min_lon, min_lat, max_lon, max_lat):
         """
@@ -283,3 +326,5 @@ class SMECV_Grid_MR_v01(SMECV_Grid_v052):
     """SMECV grid on a 0.1° resolution"""
     def __init__(self, *args, **kwargs):
         super(SMECV_Grid_MR_v01, self).__init__(*args, resolution=.1, version="MR01.0", **kwargs)
+
+

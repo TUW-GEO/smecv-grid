@@ -144,7 +144,8 @@ def test_bbox_subgrid(SMECV_Grid):
 def test_bbox(subset):
     min_lon, min_lat, max_lon, max_lat = -11, 34, 43, 71
 
-    grid = SMECV_Grid_v052(subset).subgrid_from_bbox(min_lon, min_lat, max_lon, max_lat)
+    grid = SMECV_Grid_v052(subset).subgrid_from_bbox(
+        min_lon, min_lat, max_lon, max_lat)
     if subset == 'land':
         assert grid.shape == (18408,)
     else:
@@ -173,3 +174,37 @@ def test_vers_diff():
     assert globgrid4 == globgrid5
     assert landgrid4 == landgrid5
     assert SMECV_Grid_v042('rainforest') == SMECV_Grid_v052('rainforest')
+
+
+def test_subset_grid_wrong_subset():
+    with pytest.raises(ValueError):
+        grid = SMECV_Grid_v052('some_wrong_name')
+
+def test_subset_grid():
+    urban_grid = SMECV_Grid_v052('landcover_class', subset_value=[190])
+    assert urban_grid.activegpis.size == 421
+    assert urban_grid.gpis.size == 1036800
+
+    subgrid = urban_grid.subgrid_from_subset()
+    assert len(subgrid.gpis) == len(subgrid.activegpis) == 421
+
+def test_subgrid_from_gpis():
+    urban_grid = SMECV_Grid_v052('landcover_class', subset_value=[190])
+    assert urban_grid.activegpis.size == 421
+    assert urban_grid.gpis.size == 1036800
+
+    subgrid = urban_grid.subgrid_from_gpis(np.array([649201, 636786]))
+    assert subgrid.activegpis.size == 2
+    assert subgrid.gpis.size == 2
+
+    with pytest.raises(ValueError):
+        _ = urban_grid.subgrid_from_gpis(np.array([866487, 863603]))
+
+def test_create_subgrid():
+    grid = SMECV_Grid_v052('land')
+    assert len(grid.activegpis) == 244243
+    assert len(grid.gpis) == 1036800
+
+    subgrid = grid.subgrid_from_subset()
+    assert len(subgrid.activegpis) == 244243
+    assert len(subgrid.gpis) == 244243
