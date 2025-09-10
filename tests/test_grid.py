@@ -178,7 +178,7 @@ def test_vers_diff():
 
 def test_subset_grid_wrong_subset():
     with pytest.raises(ValueError):
-        grid = SMECV_Grid_v052('some_wrong_name')
+        _ = SMECV_Grid_v052('some_wrong_name')
 
 def test_subset_grid():
     urban_grid = SMECV_Grid_v052('landcover_class', subset_value=[190])
