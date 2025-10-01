@@ -4,14 +4,17 @@ Changelog
 
 Unreleased
 ==========
--
+
+Version 0.6
+===========
+- Rainforest and LC classes available at the 0.1 degree grid.
 
 Version 0.5
 ===========
 
 - Antarctica masked on 0.1 degree grid
 - Antarctica on 0.1 still available in: ESA-CCI-SOILMOISTURE-LAND_AND_RAINFOREST_MASK_ANTARCTICA-fvMR01.0.nc
-- Rainforest and LC classes available at the 0.1 degree grid.
+
 Version 0.4
 ===========
 - Update metapackage to pyscaffold 4
