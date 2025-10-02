@@ -4,7 +4,10 @@ Changelog
 
 Unreleased
 ==========
--
+
+Version 0.6
+===========
+- Rainforest and LC classes available at the 0.1 degree grid.
 
 Version 0.5
 ===========

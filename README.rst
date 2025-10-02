@@ -19,7 +19,7 @@ smecv_grid
 
 Description
 ===========
-Grid definition of the 0.25 degree Discrete Global Grid (DGG) used for the creation of the CCI
+Grid definition of the 0.1 and the 0.25 degree Discrete Global Grid (DGG) used for the creation of the CCI
 soil moisture products and the Copernicus Climate Change Service products.
 
 Full Documentation
@@ -62,9 +62,9 @@ in `pygeogrids <https://github.com/TUW-GEO/pygeogrids>`_
 
 .. code-block:: python
 
-    from smecv_grid import SMECV_Grid_v052
+    from smecv_grid import SMECV_Grid_v052, SMECV_Grid_MR_v01 # 0.1 degree resolution
     # Load a global grid
-    glob_grid = SMECV_Grid_v052(subset_flag=None)
+    glob_grid = SMECV_Grid_v052(subset_flag=None) # 0.25 degree
     # Load a land grid
     land_grid = SMECV_Grid_v052(subset_flag='land')
     # Load a rainforest grid
